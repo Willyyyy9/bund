@@ -29,6 +29,14 @@ class IconAssets {
   static const String investmentIcon = '${iconPath}investmenticon.svg';
   static const String chatIcon = '${iconPath}chaticon.svg';
   static const String backIcon = '${iconPath}backicon.svg';
+  static const String decrementButtonIcon =
+      '${iconPath}decrementbuttonicon.svg';
+  static const String incrementButtonIcon =
+      '${iconPath}incrementbuttonicon.svg';
+  static const String netflixIcon = '${iconPath}netflixicon.svg';
+  static const String fordIcon = '${iconPath}fordicon.svg';
+  static const String appleIcon = '${iconPath}appleicon.svg';
+  static const String morganIcon = '${iconPath}morganicon.svg';
 }
 
 class JsonAssets {}

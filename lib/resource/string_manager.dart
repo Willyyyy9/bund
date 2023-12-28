@@ -33,6 +33,16 @@ class AppStrings {
   static const String termTypes = "Term Types";
   static const String threeYearTerm = "3 Year Term";
   static const String fiveYearTerm = "5 Year Term";
+  static const String investmentCalculator = "Investment Calculator";
+  static const String investmentAmount = "Investment Amount";
+  static const String capitalAtMaturity = "Capital At Maturity";
+  static const String totalInterest = "Total Interest";
+  static const String annualInterest = "Annual Interest";
+  static const String averageMaturityDate = "Average Maturity Date";
+  static const String netflixInc = "Netflix INC";
+  static const String fordMotorLLC = "Ford Motor LLC";
+  static const String appleInc = "Apple INC";
+  static const String morganStanley = "Morgan Stanley";
 }
 
 class AppLinks {}
