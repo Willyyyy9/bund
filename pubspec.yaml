@@ -1,10 +1,10 @@
 name: bund
 description: A new Flutter project.
-publish_to: 'none' 
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.5 <4.0.0'
+  sdk: ">=3.1.5 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -24,7 +24,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-flutter: 
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/bundlogo.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter:
   uses-material-design: true
   assets:
     - assets/images/
