@@ -2,6 +2,8 @@ class AppStrings {
   static const String pleaseEnterValue = "Please Enter Value";
   static const String bund = "Bund";
   static const String home = "Home";
+  static const String loading = "Loading";
+  static const String settingsHiveBox = "settingsHiveBox";
   static const String chat = "Chat";
   static const String investment = "Investment";
   static const String goodMorning = "Good Morning";
@@ -43,6 +45,10 @@ class AppStrings {
   static const String fordMotorLLC = "Ford Motor LLC";
   static const String appleInc = "Apple INC";
   static const String morganStanley = "Morgan Stanley";
+  static const String holdToIncrementContinuously =
+      "Hold to increment continuously";
+  static const String holdToDecrementContinuously =
+      "Hold to decrement continuously";
 }
 
 class AppLinks {}

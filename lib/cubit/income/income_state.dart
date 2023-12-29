@@ -9,6 +9,7 @@ class IncomeState {
   double annualYield = 6.81;
   int averageMaturityDate;
 
+  final hive = GetIt.instance<Box>();
   List<Bond> bonds = [
     Bond(
         icon: IconAssets.netflixIcon,

@@ -2,6 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:bund/data/models/bond.dart';
 import 'package:bund/resource/asset_manager.dart';
 import 'package:bund/resource/string_manager.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 
 part 'income_state.dart';
 
@@ -18,6 +21,8 @@ class IncomeCubit extends Cubit<IncomeState> {
   }
 
   void _calculateInitialValues() {
+    state.investmentAmount =
+        state.hive.get(AppStrings.investmentAmount) ?? 10000;
     state.capitalAtMaturity = getCapitalAtMaturity();
     state.annualInterest = getAnnualInterest();
     state.totalInterest = getTotalInterest();
@@ -27,6 +32,9 @@ class IncomeCubit extends Cubit<IncomeState> {
   }
 
   incrementInvestment() {
+    EasyLoading.show(status: AppStrings.loading);
+    Future.delayed(const Duration(milliseconds: 500))
+        .then((value) => EasyLoading.dismiss());
     if (state.investmentAmount >= 10000) {
       state.investmentAmount = state.investmentAmount + 10000;
     } else if (state.investmentAmount < 10000 &&
@@ -36,6 +44,7 @@ class IncomeCubit extends Cubit<IncomeState> {
         !(state.investmentAmount < 250)) {
       state.investmentAmount = state.investmentAmount + 50;
     }
+    state.hive.put(AppStrings.investmentAmount, state.investmentAmount);
 
     double capitalAtMaturity = getCapitalAtMaturity();
     double annualInterest = getAnnualInterest();
@@ -53,6 +62,9 @@ class IncomeCubit extends Cubit<IncomeState> {
   }
 
   decrementInvestment() {
+    EasyLoading.show(status: AppStrings.loading);
+    Future.delayed(const Duration(milliseconds: 500))
+        .then((value) => EasyLoading.dismiss());
     if (state.investmentAmount > 10000) {
       state.investmentAmount = state.investmentAmount - 10000;
     } else if (state.investmentAmount <= 10000 &&
@@ -62,6 +74,7 @@ class IncomeCubit extends Cubit<IncomeState> {
         !(state.investmentAmount <= 250)) {
       state.investmentAmount = state.investmentAmount - 50;
     }
+    state.hive.put(AppStrings.investmentAmount, state.investmentAmount);
 
     double capitalAtMaturity = getCapitalAtMaturity();
     double annualInterest = getAnnualInterest();

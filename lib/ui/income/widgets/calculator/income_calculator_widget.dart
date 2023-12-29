@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bund/cubit/income/income_cubit.dart';
 import 'package:bund/resource/asset_manager.dart';
@@ -12,9 +14,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
-class IncomeCalculatorWidget extends StatelessWidget {
+class IncomeCalculatorWidget extends StatefulWidget {
   const IncomeCalculatorWidget({super.key});
 
+  @override
+  State<IncomeCalculatorWidget> createState() => _IncomeCalculatorWidgetState();
+}
+
+class _IncomeCalculatorWidgetState extends State<IncomeCalculatorWidget> {
+  Timer? _timer;
+  final GlobalKey<TooltipState> incrementTooltipKey = GlobalKey<TooltipState>();
+  final GlobalKey<TooltipState> decrementTooltipKey = GlobalKey<TooltipState>();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IncomeCubit, IncomeState>(
@@ -43,24 +53,61 @@ class IncomeCalculatorWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
+                      GestureDetector(
+                          onLongPressStart: (details) {
+                            _timer = Timer.periodic(
+                                const Duration(milliseconds: 100), (timer) {
+                              context.read<IncomeCubit>().decrementInvestment();
+                            });
+                          },
+                          onLongPressEnd: (details) {
+                            _timer!.cancel();
+                            _timer = null;
+                            setState(() {});
+                          },
                           onTap: () {
+                            decrementTooltipKey.currentState
+                                ?.ensureTooltipVisible();
+
                             context.read<IncomeCubit>().decrementInvestment();
                           },
-                          child:
-                              SvgPicture.asset(IconAssets.decrementButtonIcon)),
+                          child: Tooltip(
+                              message: AppStrings.holdToDecrementContinuously,
+                              triggerMode: TooltipTriggerMode.manual,
+                              key: decrementTooltipKey,
+                              child: SvgPicture.asset(
+                                  IconAssets.decrementButtonIcon))),
                       AutoSizeText(
                         "\$${state.investmentAmount.ceil()}",
                         style: getSemiBoldStyle(
                             color: ColorManager.primary,
                             fontSize: FontSize.s32),
                       ),
-                      InkWell(
-                          onTap: () {
+                      GestureDetector(
+                        onLongPressStart: (details) {
+                          _timer = Timer.periodic(
+                              const Duration(milliseconds: 100), (timer) {
                             context.read<IncomeCubit>().incrementInvestment();
-                          },
+                          });
+                        },
+                        onLongPressEnd: (details) {
+                          _timer!.cancel();
+                          _timer = null;
+                          setState(() {});
+                        },
+                        onTap: () {
+                          incrementTooltipKey.currentState
+                              ?.ensureTooltipVisible();
+                          context.read<IncomeCubit>().incrementInvestment();
+                        },
+                        child: Tooltip(
+                          message: AppStrings.holdToIncrementContinuously,
+                          triggerMode: TooltipTriggerMode.manual,
+                          key: incrementTooltipKey,
                           child:
-                              SvgPicture.asset(IconAssets.incrementButtonIcon)),
+                              SvgPicture.asset(IconAssets.incrementButtonIcon),
+                        ),
+                      ),
                     ],
                   ),
                   const Gap(AppSize.s5),
